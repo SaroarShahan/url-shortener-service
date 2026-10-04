@@ -50,7 +50,7 @@
     "typescript": "^7.0.2"
   },
   "lint-staged": {
-    "*.{js,ts}": [
+    "src/**/*.{js,ts}": [
       "biome check --write"
     ]
   },
