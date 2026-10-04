@@ -12,6 +12,7 @@ import { logger } from './utils/logger';
 class App {
   initRoutes(app: Application): void {
     app.use(config.apiBaseUri, RouteBinder.bindRoutes());
+    app.use('/', RouteBinder.bindShortUrlRoutes());
 
     logger.info({
       message: '########## Routes initialized ###########',
