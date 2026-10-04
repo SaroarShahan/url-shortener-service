@@ -18,14 +18,17 @@ class AuthController extends BaseController {
         data: req.body,
       });
 
-      const { username, email, password, gender, roleId } = req.body;
+      const { firstName, lastName, username, email, password, gender, roleId } = req.body;
       const responseObj = new ResponseMessage();
 
-      if (!username || !email || !password || !gender || !roleId) {
+      if (!firstName || !lastName || !username || !email || !password || !gender || !roleId) {
         responseObj.httpStatusCode = 400;
-        responseObj.message = 'Username, email, password, gender, and roleId are required';
+        responseObj.message =
+          'First name, last name, username, email, password, gender, and roleId are required';
       } else {
         responseObj.data = await authServices.register({
+          firstName,
+          lastName,
           username,
           email,
           password,
