@@ -1,8 +1,10 @@
 import bcrypt from 'bcrypt';
 
-import { RoleModel, UserModel } from './../../models';
-import type { AppHttpError } from '../../types/app';
-import { generateToken } from '../../utils/jwt';
+import Models from '~/models';
+import type { AppHttpError } from '~/types/app';
+import { generateToken } from '~/utils/jwt';
+
+const { RoleModel, UserModel } = Models;
 
 class AuthServices {
   private static _instance: AuthServices;
@@ -43,6 +45,8 @@ class AuthServices {
 
     const hashedPassword = await bcrypt.hash(data.password, 12);
     const user = await UserModel.create({
+      firstName: data.firstName,
+      lastName: data.lastName,
       userName: data.username,
       email: data.email,
       password: hashedPassword,

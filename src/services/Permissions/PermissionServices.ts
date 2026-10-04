@@ -1,6 +1,8 @@
-import { RolePermissionModel } from './../../models';
+import Models from '~/models';
 import { PermissionsRepository } from './../../respository/Permissions/PermissionsRepository';
 import type { AppHttpError } from '../../types/app';
+
+const { RolePermissionModel } = Models;
 
 class PermissionServices {
   private static _instance: PermissionServices;

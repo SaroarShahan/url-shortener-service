@@ -1,6 +1,8 @@
-import { PermissionModel, sequelize, UserModel } from '../../models';
+import Models from '~/models';
 import { RolesRepository } from './../../respository/Roles/RolesRepository';
 import type { AppHttpError } from '../../types/app';
+
+const { PermissionModel, sequelize, UserModel } = Models;
 
 const roleInclude = [
   {
