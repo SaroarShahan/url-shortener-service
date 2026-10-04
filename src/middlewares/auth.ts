@@ -1,11 +1,13 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import { appCode } from '../constants/AppCode';
-import { httpStatus } from '../constants/HttpStatusCode';
-import { PermissionModel, RoleModel, UserModel } from './../models';
-import { CreateResponse } from '../utils/CreateResponse';
-import { verifyToken } from '../utils/jwt';
-import { ResponseMessage } from '../utils/ResponseMessage';
+import { appCode } from '~/constants/AppCode';
+import { httpStatus } from '~/constants/HttpStatusCode';
+import Models from '~/models';
+import { CreateResponse } from '~/utils/CreateResponse';
+import { verifyToken } from '~/utils/jwt';
+import { ResponseMessage } from '~/utils/ResponseMessage';
+
+const { PermissionModel, RoleModel, UserModel } = Models;
 
 const sendUnauthorized = (res: Response, message: string): void => {
   const responseObj = new ResponseMessage();
