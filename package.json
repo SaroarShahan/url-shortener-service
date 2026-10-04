@@ -1,8 +1,8 @@
 {
-  "name": "node-boilerplate",
+  "name": "url-shortener",
   "version": "1.0.0",
   "main": "dist/src/Index.js",
-  "repository": "git@github.com:SaroarShahan/node-boilerplate.git",
+  "repository": "git@github.com:SaroarShahan/url-shortener-service.git",
   "author": "SaroarShahan",
   "license": "MIT",
   "scripts": {

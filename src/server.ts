@@ -18,7 +18,7 @@ const server: Server = http.createServer(application);
 const listen = (): void => {
   server.listen(PORT, () => {
     logger.info({
-      message: '[ProjectName] API is running',
+      message: 'UrlShortener API is running',
       context: loggerContexts.listen,
       data: {
         ip: HOST,
@@ -31,13 +31,13 @@ const listen = (): void => {
 
 const stopServer = (): void => {
   logger.info({
-    message: '[ProjectName] Stopping server',
+    message: 'UrlShortener Stopping server',
     context: loggerContexts.stopServer,
   });
 
   server.close(() => {
     logger.info({
-      message: '[ProjectName] API is stopped',
+      message: 'UrlShortener API is stopped',
       context: loggerContexts.stopServer,
       data: {
         ip: HOST,
@@ -49,7 +49,7 @@ const stopServer = (): void => {
 
 const startServer = (): void => {
   logger.info({
-    message: '[ProjectName] Starting DB server',
+    message: 'UrlShortener Starting DB server',
     context: loggerContexts.startServer,
   });
 
@@ -57,7 +57,7 @@ const startServer = (): void => {
     .authenticate()
     .then(() => {
       logger.info({
-        message: '[ProjectName] Database connected',
+        message: 'UrlShortener Database connected',
         context: loggerContexts.startServer,
       });
       listen();
