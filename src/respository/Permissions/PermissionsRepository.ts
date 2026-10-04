@@ -1,8 +1,10 @@
-import { PermissionModel } from '../../models';
+import Models from '~/models';
 import { permissionsQueryBuilder } from './permissionsQueryBuilder';
 
+const { PermissionModel } = Models;
+
 class PermissionsRepository {
-  static instance: any;
+  static instance: PermissionsRepository;
 
   constructor() {
     if (PermissionsRepository.instance) return PermissionsRepository.instance;

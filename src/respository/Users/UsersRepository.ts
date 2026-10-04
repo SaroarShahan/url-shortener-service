@@ -1,8 +1,16 @@
-import { UserModel } from '../../models';
+import Models from '~/models';
 import { usersQueryBuilder } from './usersQueryBuilder';
 
+const { UrlModel, UserModel } = Models;
+
+const urlInclude = {
+  model: UrlModel,
+  as: 'urls',
+  attributes: ['id', 'code', 'shortUrl', 'targetUrl'],
+};
+
 class UsersRepository {
-  static instance: any;
+  static instance: UsersRepository;
 
   constructor() {
     if (UsersRepository.instance) return UsersRepository.instance;
@@ -20,11 +28,14 @@ class UsersRepository {
 
   async findAndCountAllUsers(query) {
     const options = usersQueryBuilder(query);
-    return { ...(await UserModel.findAndCountAll(options)), limit: options.limit };
+    return {
+      ...(await UserModel.findAndCountAll({ ...options, include: [urlInclude] })),
+      limit: options.limit,
+    };
   }
 
   async findById(id) {
-    return UserModel.findByPk(id);
+    return UserModel.findByPk(id, { include: [urlInclude] });
   }
 
   async update(id, data) {
