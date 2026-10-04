@@ -1,11 +1,9 @@
-import type { Options } from 'sequelize';
+import fs from 'node:fs';
+import path from 'node:path';
+import type { Model, ModelStatic, Options } from 'sequelize';
 import { DataTypes, Sequelize } from 'sequelize';
 
 import configByEnv from '../config/config';
-import createPermissionModel from './PermissionModel';
-import createRoleModel from './RoleModel';
-import createRolePermissionModel from './RolePermissionModel';
-import createUserModel from './UserModel';
 
 const config = configByEnv.development as Options & {
   database?: string;
@@ -18,12 +16,25 @@ const sequelize = config.use_env_variable
   ? new Sequelize(process.env[config.use_env_variable] || '', config)
   : new Sequelize(config.database || '', config.username || '', config.password || '', config);
 
-const db: any = {};
+type ModelFactory = (sequelize: Sequelize, dataTypes: typeof DataTypes) => ModelStatic<Model>;
 
-db.PermissionModel = createPermissionModel(sequelize, DataTypes);
-db.RoleModel = createRoleModel(sequelize, DataTypes);
-db.RolePermissionModel = createRolePermissionModel(sequelize, DataTypes);
-db.UserModel = createUserModel(sequelize, DataTypes);
+const db: any = {};
+const basename = path.basename(__filename);
+
+fs.readdirSync(__dirname)
+  .filter(
+    (file) =>
+      !file.startsWith('.') &&
+      file !== basename &&
+      !file.includes('.test.') &&
+      (file.endsWith('.ts') || file.endsWith('.js')),
+  )
+  .forEach((file) => {
+    const modelModule = require(path.join(__dirname, file));
+    const createModel = (modelModule.default ?? modelModule) as ModelFactory;
+    const model = createModel(sequelize, DataTypes);
+    db[model.name] = model;
+  });
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
@@ -34,7 +45,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-const { PermissionModel, RoleModel, RolePermissionModel, UserModel } = db;
-
-export { PermissionModel, RoleModel, RolePermissionModel, Sequelize, sequelize, UserModel };
 export default db;

@@ -7,6 +7,10 @@ const createUserModel = (sequelize, DataTypes) => {
         foreignKey: 'roleId',
         as: 'role',
       });
+      models.UserModel.hasMany(models.UrlModel, {
+        foreignKey: 'userId',
+        as: 'urls',
+      });
     }
   }
 

@@ -12,7 +12,9 @@ const config = {
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
     dialect: process.env.DB_DIALECT,
+    jwtSecret: process.env.JWT_SECRET,
     logging: console.log,
+    shortUrlBaseUrl: process.env.SHORT_URL_BASE_URL,
   },
   apiBaseUri: '/api/v1',
   corsOptions: {
