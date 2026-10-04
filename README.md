@@ -120,27 +120,65 @@ Authorization: Bearer <token>
 ```http
 GET    /api/v1/urls
 POST   /api/v1/urls
-GET    /api/v1/urls/:id
-DELETE /api/v1/urls/:id
+GET    /api/v1/urls/:code
+DELETE /api/v1/urls/:code
+```
+
+Fetching a URL by code redirects to its target URL:
+
+```http
+GET /api/v1/urls/docs
 ```
 
 Create a URL:
 
 ```json
 {
-  "code": "docs",
   "targetUrl": "https://sequelize.org/docs/v6/",
   "userId": 1
 }
 ```
 
+The response includes the generated `code` and a ready-to-use `shortUrl`, for example:
+
+```json
+{
+  "code": "V1StGXR8_Z5jd",
+  "targetUrl": "https://sequelize.org/docs/v6/",
+  "shortUrl": "http://localhost:8000/api/v1/urls/V1StGXR8_Z5jd"
+}
+```
+
 URL request rules:
 
-- `code` is required, trimmed, and limited to 100 characters.
+- `code` is generated automatically with NanoID.
 - `targetUrl` is required, must be a valid URL, and is limited to 100 characters.
 - `userId` is optional and must be a positive integer or `null`.
-- URL IDs must be positive integers.
+- URL lookups and deletion use the generated URL code.
 - List requests support `page`, `limit`, `sortBy`, and `orderBy=asc|desc`.
+
+The create response includes the persisted short URL:
+
+```json
+{
+  "code": "3xK9a",
+  "shortUrl": "http://localhost:8080/3xK9a"
+}
+```
+
+Set `SHORT_URL_BASE_URL` to the base URL that should be stored. If it is not set,
+the service uses the local API URL:
+
+```env
+SHORT_URL_BASE_URL=http://localhost:8080
+```
+
+The stored short URL is available in the URL response and points directly to the
+public short-code route:
+
+```http
+GET http://localhost:8080/docs
+```
 
 ### Users, Roles, and Permissions
 
