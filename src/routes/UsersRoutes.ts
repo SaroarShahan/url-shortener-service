@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { UserController } from '../controllers/UserController';
-import { authenticateToken, optionalAuthenticateToken } from '../middlewares/auth';
+import { authenticateToken } from '../middlewares/auth';
 import { hasPermission } from '../middlewares/authorize';
 import validate from '../middlewares/validate';
 import {
@@ -19,7 +19,10 @@ class UsersRoutes {
 
     router
       .route('/')
-      .get([optionalAuthenticateToken, validate(getUsersSchema)], userController.getAllUsers)
+      .get(
+        [authenticateToken, hasPermission('users.get'), validate(getUsersSchema)],
+        userController.getAllUsers,
+      )
       .post(
         [authenticateToken, hasPermission('users.create'), validate(createUserSchema)],
         userController.createUser,
@@ -27,7 +30,10 @@ class UsersRoutes {
 
     router
       .route('/:id')
-      .get([optionalAuthenticateToken, validate(getUserSchema)], userController.getUser)
+      .get(
+        [authenticateToken, hasPermission('users.get'), validate(getUserSchema)],
+        userController.getUser,
+      )
       .patch(
         [authenticateToken, hasPermission('users.update'), validate(updateUserSchema)],
         userController.updateUser,
