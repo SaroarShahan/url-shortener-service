@@ -1,5 +1,4 @@
 const path = require('path');
-require('tsx/cjs');
 
 module.exports = {
   config: path.resolve(__dirname, 'src/config/config.ts'),
