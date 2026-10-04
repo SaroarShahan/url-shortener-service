@@ -3,6 +3,7 @@ import express from 'express';
 import { UrlController } from '~/controllers/UrlController';
 import { authenticateToken } from '~/middlewares/auth';
 import { hasPermission } from '~/middlewares/authorize';
+import { shortenUrlLimiter } from '~/middlewares/RateLimiter';
 import validate from '~/middlewares/validate';
 import {
   createUrlSchema,
@@ -23,13 +24,18 @@ class UrlRoutes {
         urlController.getAllUrls,
       )
       .post(
-        [authenticateToken, hasPermission('create.url'), validate(createUrlSchema)],
+        [
+          authenticateToken,
+          shortenUrlLimiter,
+          hasPermission('create.url'),
+          validate(createUrlSchema),
+        ],
         urlController.createUrl,
       );
 
     router
       .route('/:code')
-      .get([validate(getUrlSchema)], urlController.getUrl)
+      .get([shortenUrlLimiter, validate(getUrlSchema)], urlController.getUrl)
       .delete(
         [authenticateToken, hasPermission('delete.url'), validate(deleteUrlSchema)],
         urlController.deleteUrl,
