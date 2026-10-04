@@ -1,0 +1,26 @@
+const loggerContexts = {
+  process: 'process',
+  listen: 'listen',
+  startServer: 'startServer',
+  stopServer: 'stopServer',
+  getAllUsers: 'UserController.getAllUsers',
+  getUser: 'UserController.getUser',
+  createUser: 'UserController.createUser',
+  updateUser: 'UserController.updateUser',
+  deleteUser: 'UserController.deleteUser',
+  getAllRoles: 'RoleController.getAllRoles',
+  getRole: 'RoleController.getRole',
+  createRole: 'RoleController.createRole',
+  updateRole: 'RoleController.updateRole',
+  deleteRole: 'RoleController.deleteRole',
+  getAllPermissions: 'PermissionController.getAllPermissions',
+  getPermission: 'PermissionController.getPermission',
+  createPermission: 'PermissionController.createPermission',
+  updatePermission: 'PermissionController.updatePermission',
+  deletePermission: 'PermissionController.deletePermission',
+  register: 'AuthController.register',
+  login: 'AuthController.login',
+  uploadFile: 'UploadController.uploadFile',
+};
+
+export { loggerContexts };

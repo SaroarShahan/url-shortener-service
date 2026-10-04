@@ -1,0 +1,21 @@
+# syntax=docker/dockerfile:1
+
+FROM node:24.15.0-alpine
+
+# Install dependencies needed for native modules (bcrypt, pg) to build
+RUN apk add --no-cache python3 make g++
+
+WORKDIR /app
+
+# Install dependencies first so this layer is cached unless package files change
+COPY package.json package-lock.json ./
+RUN npm install
+
+# App source is bind-mounted over this in docker-compose for live reload;
+# this copy just keeps the image runnable standalone too.
+COPY . .
+
+EXPOSE 8080
+
+# tsx watch gives hot-reload on file changes (matches your `dev` script)
+CMD ["npm", "run", "dev"]
