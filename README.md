@@ -4,6 +4,15 @@ URL shortener REST API built with TypeScript, Express, Sequelize, and PostgreSQL
 authentication, role-based access control, request validation, file uploads, migrations, seed data,
 and public short-code redirects.
 
+## Docs
+
+- [Getting Started](docs/getting-started.md)
+- [Project Structure](docs/project-structure.md)
+- [Scripts](docs/scripts.md)
+- [API Reference](docs/api.md)
+- [RBAC Guide](docs/rbac.md)
+- [Docker Guide](docs/docker.md)
+
 ## Stack
 
 - Node.js 24
@@ -27,15 +36,6 @@ and public short-code redirects.
 - Sequelize migrations and seeders
 - Docker Compose development environment
 - Health check endpoint
-
-## Docs
-
-- [Getting Started](docs/getting-started.md)
-- [Project Structure](docs/project-structure.md)
-- [Scripts](docs/scripts.md)
-- [API Reference](docs/api.md)
-- [RBAC Guide](docs/rbac.md)
-- [Docker Guide](docs/docker.md)
 
 ## Quick Start
 
